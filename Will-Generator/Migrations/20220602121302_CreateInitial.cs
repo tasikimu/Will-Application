@@ -38,11 +38,11 @@ namespace Will_Generator.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdentificationNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fullnames = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cellphone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostalAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EstateValue = table.Column<decimal>(type: "decimal(10,2)", nullable: false),

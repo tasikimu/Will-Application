@@ -11,7 +11,7 @@ using Will_Generator.Data;
 namespace Will_Generator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220602105610_CreateInitial")]
+    [Migration("20220602121302_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,6 +131,10 @@ namespace Will_Generator.Migrations
                     b.Property<int>("NumberOfChildren")
                         .HasColumnType("int");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PostalAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -142,9 +146,6 @@ namespace Will_Generator.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
