@@ -10,6 +10,7 @@ import { UserDetailsComponent } from './component/user-details/user-details.comp
 import { BeneficiariesComponent } from './component/beneficiaries/beneficiaries.component';
 import { EstateExcComponent } from './component/estate-exc/estate-exc.component';
 import { SubmitComponent } from './component/submit/submit.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { SubmitComponent } from './component/submit/submit.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
