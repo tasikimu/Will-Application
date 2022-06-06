@@ -21,7 +21,9 @@ namespace Will_Generator.Models
 
         public string MaritalStatus { get; set; }
 
-                            /* Additional Information */
+        public Marriage Marriages { get; set; }
+
+        public List<Cohabit> Cohabits { get; set; }
         public string BurialPreference { get; set; }
 
         [MaxLength(20000)]
@@ -29,8 +31,52 @@ namespace Will_Generator.Models
 
         public int NumberOfChildren { get; set; }
 
-        public string EstateInheriter { get; set; }
+        public List<Children> Childrens { get; set; }
 
-        public string EstateOtherInheriter { get; set; }
+        public List<PrefferedHeir> PrefferedHeirs { get; set; }
+
+        public List<Charity> Charities { get; set; }
+    }
+
+    public class Marriage
+    {
+        public int ID { get; set; }
+        public string TypeOfMarriage { get; set; }
+        public string Fullname { get; set; }
+        public string Surname { get; set; }
+        public string IdentificationNo { get; set; }
+    }
+
+    public class Cohabit
+    {
+        public int ID { get; set; }
+        public string Fullname { get; set; }
+        public string Surname { get; set; }
+        public string IdentificationNo { get; set; }
+    }
+
+    public class Children
+    {
+        public int ID { get; set; }
+        public string Fullname { get; set; }
+        public string Surname { get; set; }
+        [NotMapped]
+        public DateOnly DOB { get; set; }
+    }
+
+    public class PrefferedHeir
+    {
+        public int ID { get; set; }
+        public string Relationship { get; set; }
+        public string Fullname { get; set; }
+        public string Surname { get; set; }
+
+    }
+
+    public class Charity
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string Name2 { get; set; }
     }
 }

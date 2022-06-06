@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Will_Generator.Data;
 
@@ -11,9 +12,10 @@ using Will_Generator.Data;
 namespace Will_Generator.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220606075707_CreateInitial")]
+    partial class CreateInitial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,48 +23,6 @@ namespace Will_Generator.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Will_Generator.Models.Bank", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
-
-                    b.Property<string>("AccountNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("AccountType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Branch")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BranchCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Deductions")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EstateExecutorID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("EstateExecutorID");
-
-                    b.ToTable("Bank");
-                });
 
             modelBuilder.Entity("Will_Generator.Models.Charity", b =>
                 {
@@ -102,7 +62,7 @@ namespace Will_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonalDetailID")
+                    b.Property<int>("PersonalDetailID")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
@@ -132,7 +92,7 @@ namespace Will_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonalDetailID")
+                    b.Property<int>("PersonalDetailID")
                         .HasColumnType("int");
 
                     b.Property<string>("Surname")
@@ -154,6 +114,26 @@ namespace Will_Generator.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BranchName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Cellphone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -167,6 +147,10 @@ namespace Will_Generator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdentificationNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PrefferedPaymentDate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -195,6 +179,9 @@ namespace Will_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PersonalDetailID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -204,6 +191,8 @@ namespace Will_Generator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("PersonalDetailID");
 
                     b.ToTable("Marriage");
                 });
@@ -248,9 +237,6 @@ namespace Will_Generator.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MarriagesID")
-                        .HasColumnType("int");
-
                     b.Property<int>("NumberOfChildren")
                         .HasColumnType("int");
 
@@ -271,8 +257,6 @@ namespace Will_Generator.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MarriagesID");
 
                     b.ToTable("PersonalDetails");
                 });
@@ -307,13 +291,6 @@ namespace Will_Generator.Migrations
                     b.ToTable("PrefferedHeir");
                 });
 
-            modelBuilder.Entity("Will_Generator.Models.Bank", b =>
-                {
-                    b.HasOne("Will_Generator.Models.EstateExecutor", null)
-                        .WithMany("Banks")
-                        .HasForeignKey("EstateExecutorID");
-                });
-
             modelBuilder.Entity("Will_Generator.Models.Charity", b =>
                 {
                     b.HasOne("Will_Generator.Models.PersonalDetail", null)
@@ -323,27 +300,35 @@ namespace Will_Generator.Migrations
 
             modelBuilder.Entity("Will_Generator.Models.Children", b =>
                 {
-                    b.HasOne("Will_Generator.Models.PersonalDetail", null)
+                    b.HasOne("Will_Generator.Models.PersonalDetail", "PersonalDetail")
                         .WithMany("Childrens")
-                        .HasForeignKey("PersonalDetailID");
+                        .HasForeignKey("PersonalDetailID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonalDetail");
                 });
 
             modelBuilder.Entity("Will_Generator.Models.Cohabit", b =>
                 {
-                    b.HasOne("Will_Generator.Models.PersonalDetail", null)
+                    b.HasOne("Will_Generator.Models.PersonalDetail", "PersonalDetail")
                         .WithMany("Cohabits")
-                        .HasForeignKey("PersonalDetailID");
-                });
-
-            modelBuilder.Entity("Will_Generator.Models.PersonalDetail", b =>
-                {
-                    b.HasOne("Will_Generator.Models.Marriage", "Marriages")
-                        .WithMany()
-                        .HasForeignKey("MarriagesID")
+                        .HasForeignKey("PersonalDetailID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Marriages");
+                    b.Navigation("PersonalDetail");
+                });
+
+            modelBuilder.Entity("Will_Generator.Models.Marriage", b =>
+                {
+                    b.HasOne("Will_Generator.Models.PersonalDetail", "PersonalDetail")
+                        .WithMany("Marriages")
+                        .HasForeignKey("PersonalDetailID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PersonalDetail");
                 });
 
             modelBuilder.Entity("Will_Generator.Models.PrefferedHeir", b =>
@@ -353,11 +338,6 @@ namespace Will_Generator.Migrations
                         .HasForeignKey("PersonalDetailID");
                 });
 
-            modelBuilder.Entity("Will_Generator.Models.EstateExecutor", b =>
-                {
-                    b.Navigation("Banks");
-                });
-
             modelBuilder.Entity("Will_Generator.Models.PersonalDetail", b =>
                 {
                     b.Navigation("Charities");
@@ -365,6 +345,8 @@ namespace Will_Generator.Migrations
                     b.Navigation("Childrens");
 
                     b.Navigation("Cohabits");
+
+                    b.Navigation("Marriages");
 
                     b.Navigation("PrefferedHeirs");
                 });
