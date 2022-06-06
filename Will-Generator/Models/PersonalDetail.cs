@@ -70,7 +70,6 @@ namespace Will_Generator.Models
         public string Relationship { get; set; }
         public string Fullname { get; set; }
         public string Surname { get; set; }
-
     }
 
     public class Charity
